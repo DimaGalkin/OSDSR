@@ -26,7 +26,7 @@ struct vbe_info_ds {
 	uint8_t w_char;
 	uint8_t y_char;
 	uint8_t planes;
-	uint8_t bpp;			// bits per pixel in this mode
+	uint8_t bpp;	// bits per pixel in this mode
 	uint8_t banks;
 	uint8_t memory_model;
 	uint8_t bank_size;

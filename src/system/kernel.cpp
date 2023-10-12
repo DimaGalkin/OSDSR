@@ -11,10 +11,8 @@ void sleep() {
 	}
 }
 
-extern "C" void system_main() {
-	Memory memory;
-	Display display (&memory);
-
+// please ignore this code it is for temporary testing
+void demo(Display& display, Memory& memory) {
 	display.clear_screen(0x00000000);
 	
 	for (int i = 0; i < 100; ++i) {
@@ -30,4 +28,11 @@ extern "C" void system_main() {
 		display.swap_buffers();
 		x++;
 	}
+}
+
+extern "C" void system_main() {
+	Memory memory;
+	Display display (&memory);
+
+	demo(display, memory);
 }
