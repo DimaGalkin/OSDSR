@@ -3,6 +3,7 @@
 #include "memory/mem.hpp"
 #include "display/display.hpp"
 
+// ignore this. please.
 void sleep() {
 	int i = 0;
 
@@ -11,28 +12,15 @@ void sleep() {
 	}
 }
 
-// please ignore this code it is for temporary testing
-void demo(Display& display, Memory& memory) {
-	display.clear_screen(0x00000000);
-	
-	for (int i = 0; i < 100; ++i) {
-		sleep();
-		display.draw_pixel(i, i, 0x00FF0000);
-		display.swap_buffers();
-	}
-
-	int x = 100;
-	for (int i = 100; i > 0; --i) {
-		sleep();
-		display.draw_pixel(x, i, 0x00FF0000);
-		display.swap_buffers();
-		x++;
-	}
+void demo(Memory& memory, Display& display) {
+	display.clear_screen(0xffffff);
+	display.swap_buffers();
 }
 
+// entry point
 extern "C" void system_main() {
 	Memory memory;
 	Display display (&memory);
-
-	demo(display, memory);
+	
+	demo(memory, display);
 }
