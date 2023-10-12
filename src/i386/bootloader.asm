@@ -1,4 +1,4 @@
-global start
+global start ; for linker
 extern system_main ; c++ kernel
 extern switch_to_real_mode ; real mode switch
 
