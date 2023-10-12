@@ -28,7 +28,7 @@ Display::Display(Memory* memory) {
 
     // sets the frontbuffer and allocates the backbuffer
     frontbuffer_ = info->framebuffer;
-    backbuffer_ = memory->malloc(width_ * height_ * (bpp_ / 8));
+    backbuffer_ = reinterpret_cast<uint32_t>(memory->malloc(width_ * height_ * (bpp_ / 8)));
 }
 
 void Display::clear_screen(uint32_t color) {

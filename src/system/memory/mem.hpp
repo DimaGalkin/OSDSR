@@ -20,17 +20,17 @@ class Memory {
       Memory();
       ~Memory() = default;
 
-      uint32_t malloc(uint32_t size);
+      uint32_t* malloc(uint32_t size);
       void free(uint32_t* addr, uint32_t size);
       void memcpy(uint32_t* dstptr, uint32_t* srcptr, uint32_t size);
 
    private:
-      memory_allocation_table* mat; // located in the heap
+      memory_allocation_table* mat_; // located in the heap
 
-      static constexpr uint32_t mat_location = 0x01000000;
-      static constexpr uint32_t blocks = BLOCKS;
-      static constexpr uint32_t memory_start = mat_location + sizeof(memory_allocation_table); // place straight after MAT
-      static constexpr uint32_t memory_length = 0x00E00000; // 14 MiB
-      static constexpr uint32_t memory_size = memory_length * 32;
-      static constexpr uint32_t block = static_cast<uint32_t>(memory_size / blocks);
+      static constexpr uint32_t mat_location_ = 0x01000000;
+      static constexpr uint32_t blocks_ = BLOCKS;
+      static constexpr uint32_t memory_start_ = mat_location_ + sizeof(memory_allocation_table); // place straight after MAT
+      static constexpr uint32_t memory_length_ = 0x00E00000; // 14 MiB
+      static constexpr uint32_t memory_size_ = memory_length_ * 32;
+      static constexpr uint32_t block_ = static_cast<uint32_t>(memory_size_ / blocks_);
 };
