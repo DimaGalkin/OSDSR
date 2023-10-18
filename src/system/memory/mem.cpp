@@ -14,23 +14,9 @@ uint32_t* Memory::malloc(uint32_t size) {
       return 0;
    }
 
-   // some dodgy math to get the number of blocks without ceil()
-   double blocks_needed_fl = static_cast<double>(size) / block_;
+   const uint32_t blocks_needed = (size + block_ - 1) / block_;
    uint32_t consecutive_blocks = 0;
    uint32_t start_block = 0;
-
-   uint32_t blocks_needed;
-
-   if (blocks_needed_fl > 0 && blocks_needed_fl < 1) {
-      blocks_needed = 1;
-   } else {
-      double blocks_needed_rem = blocks_needed_fl - static_cast<uint32_t>(blocks_needed_fl);
-      if (blocks_needed_rem > 0) {
-         blocks_needed = static_cast<uint32_t>(blocks_needed_fl) + 1;
-      } else {
-         blocks_needed = static_cast<uint32_t>(blocks_needed_fl);
-      }
-   }
 
    for (int i = 0; i < blocks_; ++i) {
       if (mat_->table[i] == true) {
@@ -56,6 +42,7 @@ uint32_t* Memory::malloc(uint32_t size) {
       }
    }
 
+
    return 0;
 }
 
@@ -64,20 +51,7 @@ void Memory::free(uint32_t* addr, uint32_t size) {
       return;
    }
 
-   // more funky math as we don't have ceil()
-   double blocks_needed_fl = (double)size / block_;
-   uint32_t blocks_needed;
-
-   if (blocks_needed_fl > 0 && blocks_needed_fl < 1) {
-      blocks_needed = 1;
-   } else {
-      double blocks_needed_rem = blocks_needed_fl - static_cast<uint32_t>(blocks_needed_fl);
-      if (blocks_needed_rem > 0) {
-         blocks_needed = static_cast<uint32_t>(blocks_needed_fl) + 1;
-      } else {
-         blocks_needed = static_cast<uint32_t>(blocks_needed_fl);
-      }
-   }
+   const uint32_t blocks_needed = (size + block_ - 1) / block_;
 
    // workout where the first block is
    uint32_t start = (reinterpret_cast<uint32_t>(addr) - memory_start_) / block_;
@@ -90,7 +64,17 @@ void Memory::free(uint32_t* addr, uint32_t size) {
 
 void Memory::memcpy(uint32_t* dstptr, uint32_t* srcptr, uint32_t size) {
    // copy size bytes from srcptr to dstptr
-   for (int i = 0; i < size; ++i) {
+
+   int i = 0;
+
+   for (; i < (size / 4); i+=4) {
+      dstptr[i] = srcptr[i];
+      dstptr[i+1] = srcptr[i+1];
+      dstptr[i+2] = srcptr[i+2];
+      dstptr[i+3] = srcptr[i+3];
+   }
+
+   for (; i < size; ++i) {
       dstptr[i] = srcptr[i];
    }
 }

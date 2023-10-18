@@ -71,7 +71,9 @@ class Display {
         void draw_pixel(uint32_t x, uint32_t y, uint32_t color);
         void draw_pixel_r(uint32_t x, uint32_t y, uint32_t color);
 		void swap_buffers();
-    
+
+		void draw_char(uint32_t x, uint32_t y, uint8_t locs[400]);
+
         uint16_t width_;
         uint16_t height_;
         uint16_t bpp_; // bits per pixel

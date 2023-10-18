@@ -59,3 +59,18 @@ void Display::swap_buffers() {
         width_ * height_ * (bpp_ / 8) // size
     );
 }
+
+void Display::draw_char(uint32_t x, uint32_t y, uint8_t locs[400]) {
+    uint32_t x_add = 0;
+    uint32_t y_add = 0;
+
+    for (int i = 0; i < 400; ++i) {
+        draw_pixel(x + x_add, y + y_add, locs[i] * 0x0000ff00);
+
+        ++x_add;
+        if (x_add > 19) {
+            ++y_add;
+            x_add = 0;
+        }
+    }
+}
