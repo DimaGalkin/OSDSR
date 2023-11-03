@@ -67,6 +67,7 @@ void Memory::memcpy(uint32_t* dstptr, uint32_t* srcptr, uint32_t size) {
 
    int i = 0;
 
+
    for (; i < (size / 4); i+=4) {
       dstptr[i] = srcptr[i];
       dstptr[i+1] = srcptr[i+1];
