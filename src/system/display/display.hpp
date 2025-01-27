@@ -4,6 +4,8 @@
 
 #include "../memory/mem.hpp"
 
+extern unsigned char basic_font[128][8];
+
 // for use with int32
 typedef struct {
 	unsigned short di, si, bp, sp, bx, dx, cx, ax;
@@ -64,7 +66,7 @@ struct vbe_info_ds {
 */
 class Display {
     public:
-        Display(Memory* memory);
+        Display();
         ~Display() = default;
 
         void clear_screen(uint32_t color);
@@ -72,12 +74,14 @@ class Display {
         void draw_pixel_r(uint32_t x, uint32_t y, uint32_t color);
 		void swap_buffers();
 
-		void draw_char(uint32_t x, uint32_t y, uint8_t locs[400]);
+		void draw_char(const char c, const uint32_t color);
 
         uint16_t width_;
         uint16_t height_;
         uint16_t bpp_; // bits per pixel
         uint16_t pitch_; // number of bytes per horizontal line
+
+        uint32_t chars_drawn_;
 
 		uint32_t frontbuffer_;
 		uint32_t backbuffer_;
@@ -89,6 +93,8 @@ class Display {
         static constexpr uint16_t mode_inst_ = 0x4F02; // set vbe mode
 
         static constexpr uint32_t vbe_info_ = 0x8000; // location of vbe info block in heap
-
-		Memory* memory_;
 };
+
+extern Display* GLOBAL_DISPLAY_MANAGER;
+extern void printf(const char* string, const uint32_t color = 0xffffff);
+extern void printf(const char c, const uint32_t color = 0xffffff);

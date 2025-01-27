@@ -17,15 +17,15 @@ $(cpp_obj): build/system/%.o : system/%.cpp
 .PHONY: clean
 clean:
 	rm i386/kernel.iso
+	rm i386/boot/kernel.bin
+	rm i386/kernel.bin
+	rm -fr build
 
 .PHONY: build
 build: $(cpp_obj) $(asm_obj)
 	ld -m elf_i386  -o i386/kernel.bin -T i386/linker.ld $(object_files) -nostdlib && \
 	cp i386/kernel.bin i386/boot/kernel.bin && \
 	grub-mkrescue -o i386/kernel.iso i386/ && \
-	rm i386/boot/kernel.bin
-	rm i386/kernel.bin
-	rm -fr build
 	qemu-system-i386 -cdrom i386/kernel.iso
 
 run:

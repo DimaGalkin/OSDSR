@@ -9,7 +9,7 @@ Memory::Memory() {
    }
 }
 
-uint32_t* Memory::malloc(uint32_t size) {
+uint32_t* Memory::malloc_r(uint32_t size) {
    if (size == 0) {
       return 0;
    }
@@ -46,14 +46,14 @@ uint32_t* Memory::malloc(uint32_t size) {
    return 0;
 }
 
-void Memory::free(uint32_t* addr, uint32_t size) {
+void Memory::free_r(uint32_t* addr, uint32_t size) {
    if (size == 0) {
       return;
    }
 
    const uint32_t blocks_needed = (size + block_ - 1) / block_;
 
-   // workout where the first block is
+   // work out where the first block is
    uint32_t start = (reinterpret_cast<uint32_t>(addr) - memory_start_) / block_;
 
    // mark blocks as avaliable
@@ -62,7 +62,7 @@ void Memory::free(uint32_t* addr, uint32_t size) {
    }
 }
 
-void Memory::memcpy(uint32_t* dstptr, uint32_t* srcptr, uint32_t size) {
+void Memory::memcpy_r(uint32_t* dstptr, uint32_t* srcptr, uint32_t size) {
    // copy size bytes from srcptr to dstptr
 
    int i = 0;
