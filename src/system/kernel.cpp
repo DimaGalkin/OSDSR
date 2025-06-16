@@ -15,7 +15,7 @@ extern "C" void system_main() {
     Display display;
     GLOBAL_DISPLAY_MANAGER = &display;
 
-	display.clear_screen(0x000000);
+	display.clear_screen(0xff0000);
 
 	initKeyboard();
 
